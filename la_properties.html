@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAロス合宿 2026 宿泊候補物件</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --navy: #1a2744;
+    --gold: #c9a84c;
+    --gold-light: #f0d98a;
+    --cream: #faf8f3;
+    --gray: #6b7280;
+    --light-gray: #f3f4f6;
+    --white: #ffffff;
+    --red: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, #1a2744 0%, #2d3f6e 100%);
+  }
+
+  header * { position: relative; }
+
+  .header-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .header-sub {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 0.5rem;
+  }
+
+  .header-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .header-info-item {
+    text-align: center;
+  }
+
+  .header-info-item .label {
+    font-size: 0.7rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .header-info-item .value {
+    font-size: 0.95rem;
+    color: var(--white);
+    font-weight: 500;
+    margin-top: 0.2rem;
+  }
+
+  .gold-bar {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 2.5rem 0 1.5rem;
+  }
+
+  .card {
+    background: var(--white);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 24px rgba(26,39,68,0.08);
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .card-header {
+    padding: 1.5rem 1.75rem 1.25rem;
+    border-bottom: 1px solid #f0ece0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .card-header-left {
+    flex: 1;
+  }
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+  }
+
+  .rank-1 { background: #fff8e7; color: #92680a; border: 1px solid #f0d98a; }
+  .rank-2 { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+  .rank-3 { background: #fdf2f8; color: #9d174d; border: 1px solid #fbcfe8; }
+  .rank-alert { background: #fff1f2; color: #be123c; border: 1px solid #fecdd3; }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+
+  .card-location {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 0.3rem;
+  }
+
+  .price-block {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .price-label {
+    font-size: 0.7rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+  }
+
+  .price-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.1;
+  }
+
+  .price-note {
+    font-size: 0.7rem;
+    color: var(--gray);
+  }
+
+  .card-body {
+    padding: 1.25rem 1.75rem;
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .spec-item {
+    background: var(--light-gray);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    text-align: center;
+  }
+
+  .spec-label {
+    font-size: 0.68rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+  }
+
+  .spec-value {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-top: 0.2rem;
+  }
+
+  .amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .amenity-tag {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .tag-green { background: #dcfce7; color: #166534; }
+  .tag-blue { background: #dbeafe; color: #1e40af; }
+  .tag-orange { background: #fff7ed; color: #9a3412; }
+  .tag-gray { background: #f3f4f6; color: #374151; }
+  .tag-red { background: #fff1f2; color: #be123c; }
+
+  .info-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.85rem;
+  }
+
+  .info-icon {
+    width: 18px;
+    flex-shrink: 0;
+    text-align: center;
+    margin-top: 1px;
+  }
+
+  .info-text {
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  .info-text strong {
+    color: var(--navy);
+  }
+
+  .alert-box {
+    background: #fff8e7;
+    border: 1px solid #f0d98a;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.82rem;
+    color: #78560a;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .alert-box-red {
+    background: #fff1f2;
+    border: 1px solid #fecdd3;
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.82rem;
+    color: #be123c;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  .card-footer {
+    padding: 1rem 1.75rem;
+    background: #f8f7f3;
+    border-top: 1px solid #f0ece0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .stars { color: #f59e0b; }
+
+  .url-link {
+    font-size: 0.78rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid var(--gold);
+    padding: 0.35rem 1rem;
+    border-radius: 20px;
+    transition: all 0.2s;
+  }
+
+  .url-link:hover {
+    background: var(--gold);
+    color: var(--white);
+  }
+
+  .divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #e5d8b0, transparent);
+    margin: 0.75rem 0;
+  }
+
+  .minami-note {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .minami-note .dist {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.75rem;
+    color: var(--gray);
+    border-top: 1px solid #e5d8b0;
+  }
+
+  @media (max-width: 600px) {
+    .specs-grid { grid-template-columns: repeat(2, 1fr); }
+    .card-header { flex-direction: column; }
+    .price-block { text-align: left; }
+    header h1 { font-size: 1.5rem; }
+    .header-info { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="header-label">内田塾 LA合宿 2026 · 宿泊候補物件</p>
+  <h1>Break Summit<br>Newport Beach</h1>
+  <p class="header-sub">Airbnb 物件候補 3件 · よっしー調査</p>
+  <div class="header-info">
+    <div class="header-info-item">
+      <div class="label">日程</div>
+      <div class="value">7月16日（木）〜 19日（日）</div>
+    </div>
+    <div class="header-info-item">
+      <div class="label">泊数</div>
+      <div class="value">3泊4日</div>
+    </div>
+    <div class="header-info-item">
+      <div class="label">参加人数</div>
+      <div class="value">約10名</div>
+    </div>
+  </div>
+</header>
+<div class="gold-bar"></div>
+
+<main>
+  <p class="section-title">候補物件 一覧</p>
+
+  <!-- 物件1 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="rank-badge rank-1">🥇 候補 A</span>
+        <div class="card-title">コスタ・メサの一軒家</div>
+        <div class="card-location">📍 コスタ・メサ（ニューポートビーチまで約4km）</div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">3泊合計</div>
+        <div class="price-value">¥413,747</div>
+        <div class="price-note">7/16〜19 · 10名</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">定員</div>
+          <div class="spec-value">12名</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">寝室</div>
+          <div class="spec-value">3室</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">バスルーム</div>
+          <div class="spec-value">3室</div>
+        </div>
+      </div>
+      <div class="amenities">
+        <span class="amenity-tag tag-green">✅ プロパンBBQ</span>
+        <span class="amenity-tag tag-green">✅ 裏庭あり</span>
+        <span class="amenity-tag tag-green">✅ 暖炉</span>
+        <span class="amenity-tag tag-blue">🅿️ 駐車6台分</span>
+        <span class="amenity-tag tag-gray">洗濯機・乾燥機×2</span>
+        <span class="amenity-tag tag-gray">エアコン</span>
+        <span class="amenity-tag tag-gray">フルキッチン</span>
+      </div>
+      <hr class="divider">
+      <div class="info-row">
+        <span class="info-icon">🛏️</span>
+        <span class="info-text">キング×1・クイーン×2（＋エアマットレス2台でソファ利用可）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">⭐</span>
+        <span class="info-text"><strong>評価4.98 / 386件レビュー・上位5%</strong>（ゲストチョイス）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">👤</span>
+        <span class="info-text">ホスト：Jenさん（スーパーホスト・ホスティング歴8年）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📝</span>
+        <span class="info-text">2025年2月に全面リノベ済み。レビューで「裏庭が素敵」と複数言及あり</span>
+      </div>
+      <div class="minami-note">
+        <span class="dist">✈️ 約50分</span>
+        <span>LA空港（LAX）から車で約50分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#16436e;">
+        <span class="dist">🏖️ 約10分</span>
+        <span>ニューポートビーチまで車で約10分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#0f3d2e;">
+        <span class="dist">🍜 約20〜25分</span>
+        <span>いざかやみなみ（ラグナヒルズ）まで車で約20〜25分</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="rating"><span class="stars">★★★★★</span> 4.98（386件）</div>
+      <a class="url-link" href="https://www.airbnb.jp/rooms/23884728" target="_blank">Airbnbで見る →</a>
+    </div>
+  </div>
+
+  <!-- 物件2 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="rank-badge rank-2">🥈 候補 B</span>
+        <div class="card-title">ハンティントンビーチの一軒家<br>（ビーチ徒歩2分）</div>
+        <div class="card-location">📍 ハンティントンビーチ</div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">3泊合計</div>
+        <div class="price-value">¥675,213</div>
+        <div class="price-note">7/16〜19 · 10名</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">定員</div>
+          <div class="spec-value">10名</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">寝室</div>
+          <div class="spec-value">4室</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">バスルーム</div>
+          <div class="spec-value">3室</div>
+        </div>
+      </div>
+      <div class="amenities">
+        <span class="amenity-tag tag-orange">❓ BBQ不明</span>
+        <span class="amenity-tag tag-orange">❓ 庭・眺望不明</span>
+        <span class="amenity-tag tag-green">✅ ビーチ徒歩2分</span>
+        <span class="amenity-tag tag-blue">🏠 インテリアが好評</span>
+        <span class="amenity-tag tag-gray">エアコン</span>
+        <span class="amenity-tag tag-gray">フルキッチン</span>
+        <span class="amenity-tag tag-gray">洗濯機・乾燥機</span>
+      </div>
+      <hr class="divider">
+      <div class="info-row">
+        <span class="info-icon">🛏️</span>
+        <span class="info-text">キング×1・クイーン×1・セミダブル×2・ツイン×2（部屋割りしやすい）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">⭐</span>
+        <span class="info-text"><strong>評価5.0 / 4件レビュー</strong>（ホスティング歴2ヶ月・実績少なめ）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">👤</span>
+        <span class="info-text">ホスト：Ninaさん（通常ホスト）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📝</span>
+        <span class="info-text">インテリアが洗練されており内装は高評価。BBQ・お庭の詳細はホストへ要確認</span>
+      </div>
+      <div class="alert-box-red">
+        ⚠️ <strong>注意：</strong>候補3件の中で最も高額（¥675,213）。BBQと庭の有無が未確認のため、ホストへの確認が必要です。
+      </div>
+      <div class="minami-note">
+        <span class="dist">✈️ 約45〜55分</span>
+        <span>LA空港（LAX）から車で約45〜55分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#16436e;">
+        <span class="dist">🏖️ 約18分</span>
+        <span>ニューポートビーチまで車で約18分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#0f3d2e;">
+        <span class="dist">🍜 約25〜30分</span>
+        <span>いざかやみなみ（ラグナヒルズ）まで車で約25〜30分</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="rating"><span class="stars">★★★★★</span> 5.0（4件）</div>
+      <a class="url-link" href="https://www.airbnb.jp/rooms/1616058933306143641" target="_blank">Airbnbで見る →</a>
+    </div>
+  </div>
+
+  <!-- 物件3 -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="rank-badge rank-3">🥉 候補 C</span>
+        <div class="card-title">Up&Away<br>（ホットタブ・プロジェクター・ゲーム付き）</div>
+        <div class="card-location">📍 ミッドウェー・シティ（オレンジカウンティ）</div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">3泊合計</div>
+        <div class="price-value">¥355,414</div>
+        <div class="price-note">7/16〜19 · 10名</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">定員</div>
+          <div class="spec-value">12名</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">寝室</div>
+          <div class="spec-value">4室</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">バスルーム</div>
+          <div class="spec-value">3室</div>
+        </div>
+      </div>
+      <div class="amenities">
+        <span class="amenity-tag tag-green">✅ BBQグリル</span>
+        <span class="amenity-tag tag-green">✅ 広い庭</span>
+        <span class="amenity-tag tag-green">✅ 露天風呂・ジャグジー</span>
+        <span class="amenity-tag tag-blue">🎬 屋外プロジェクター</span>
+        <span class="amenity-tag tag-blue">🎮 ゲームルーム</span>
+        <span class="amenity-tag tag-gray">エアコン</span>
+        <span class="amenity-tag tag-gray">洗濯機・乾燥機</span>
+      </div>
+      <hr class="divider">
+      <div class="info-row">
+        <span class="info-icon">🛏️</span>
+        <span class="info-text">フル×2・クイーン×2・ソファベッド×1（4室）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">⭐</span>
+        <span class="info-text"><strong>評価5.0 / 28件レビュー</strong>（ゲストチョイス）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">👤</span>
+        <span class="info-text">ホスト：BT & Alexさん（スーパーホスト・返答率100%）</span>
+      </div>
+      <div class="info-row">
+        <span class="info-icon">📝</span>
+        <span class="info-text">3件の中で最もリーズナブル。庭・ジャグジー・BBQ・屋外プロジェクターと設備充実</span>
+      </div>
+      <div class="alert-box">
+        💡 <strong>コスパ最良：</strong>候補3件の中で最安値。庭もBBQも揃っており、合宿・懇親会向けのアメニティが最も充実しています。
+      </div>
+      <div class="minami-note">
+        <span class="dist">✈️ 約40〜50分</span>
+        <span>LA空港（LAX）から車で約40〜50分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#16436e;">
+        <span class="dist">🏖️ 約18分</span>
+        <span>ニューポートビーチまで車で約18分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#0f3d2e;">
+        <span class="dist">🍜 約25〜30分</span>
+        <span>いざかやみなみ（ラグナヒルズ）まで車で約25〜30分</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="rating"><span class="stars">★★★★★</span> 5.0（28件）</div>
+      <a class="url-link" href="https://www.airbnb.jp/rooms/1527098106975070803" target="_blank">Airbnbで見る →</a>
+    </div>
+  </div>
+
+  <!-- 参考：ミッション・ビエホ -->
+  <div class="card" style="border-color: rgba(190,18,60,0.2);">
+    <div class="card-header">
+      <div class="card-header-left">
+        <span class="rank-badge rank-alert">📌 参考物件（日程要確認）</span>
+        <div class="card-title">ミッション・ビエホのファミリーリトリート<br>（プール・ジャグジー完備）</div>
+        <div class="card-location">📍 ミッション・ビエホ（南オレンジカウンティ）</div>
+      </div>
+      <div class="price-block">
+        <div class="price-label">参考料金</div>
+        <div class="price-value" style="font-size:1.3rem; color: var(--navy);">¥713,034</div>
+        <div class="price-note">最低4泊・日程変更が必要</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="specs-grid">
+        <div class="spec-item">
+          <div class="spec-label">定員</div>
+          <div class="spec-value">13名</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">寝室</div>
+          <div class="spec-value">5室</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">バスルーム</div>
+          <div class="spec-value">要確認</div>
+        </div>
+      </div>
+      <div class="amenities">
+        <span class="amenity-tag tag-green">✅ プール</span>
+        <span class="amenity-tag tag-green">✅ ジャグジー</span>
+        <span class="amenity-tag tag-green">✅ ゲームルーム</span>
+        <span class="amenity-tag tag-blue">⭐ スーパーホスト 5.0</span>
+      </div>
+      <div class="alert-box-red">
+        ⚠️ <strong>7/16〜19は予約不可（7/19が空いていない）。</strong><br>
+        最低4泊必要で 7/11チェックイン・7/15チェックアウト が条件。日程を変更できる場合は最有力候補になります。日程の再検討を塾長と相談してみてください。
+      </div>
+      <div class="minami-note">
+        <span class="dist">✈️ 約55〜60分</span>
+        <span>LA空港（LAX）から車で約55〜60分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#16436e;">
+        <span class="dist">🏖️ 約15分</span>
+        <span>ニューポートビーチまで車で約15分</span>
+      </div>
+      <div class="minami-note" style="margin-top:0.5rem; background:#0f3d2e;">
+        <span class="dist">🍜 約10〜15分</span>
+        <span>いざかやみなみ（ラグナヒルズ）まで車で約10〜15分（最も近い）</span>
+      </div>
+    </div>
+    <div class="card-footer">
+      <div class="rating"><span class="stars">★★★★★</span> 5.0（スーパーホスト）</div>
+      <a class="url-link" href="https://www.airbnb.jp/rooms/1634308418408496008" target="_blank">Airbnbで見る →</a>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  内田塾 LAロス合宿 2026 · よっしー作成 · Airbnb物件調査レポート
+</footer>
+
+</body>
+</html>
